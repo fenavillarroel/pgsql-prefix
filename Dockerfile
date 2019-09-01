@@ -53,13 +53,13 @@ ENV LANG en_US.utf8
 # https://cwrap.org/nss_wrapper.html
 RUN set -eux; \
 	apt-get update; \
-	apt-get install -y --no-install-recommends libnss-wrapper; \
+	apt-get install -y --no-install-recommends libnss-wrapper gpgv2;\
 	rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /docker-entrypoint-initdb.d
 
-RUN mkdir ~/.gnupg
-RUN echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
+#RUN mkdir ~/.gnupg
+#RUN echo "disable-ipv6" >> ~/.gnupg/dirmngr.conf
 
 RUN set -ex; \
 # pub   4096R/ACCC4CF8 2011-10-13 [expires: 2019-07-02]
