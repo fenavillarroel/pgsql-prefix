@@ -53,7 +53,7 @@ ENV LANG en_US.utf8
 # https://cwrap.org/nss_wrapper.html
 RUN set -eux; \
 	apt-get update; \
-	apt-get install -y --no-install-recommends libnss-wrapper gpgv2;\
+	apt-get install -y --no-install-recommends libnss-wrapper gnupg2;\
 	rm -rf /var/lib/apt/lists/*
 
 RUN mkdir /docker-entrypoint-initdb.d
@@ -67,8 +67,8 @@ RUN set -ex; \
 # uid                  PostgreSQL Debian Repository
 	key='B97B0AFCAA1A47F044F244A07FCC7D46ACCC4CF8'; \
 	export GNUPGHOME="$(mktemp -d)"; \
-	gpg --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
-	gpg --batch --export "$key" > /etc/apt/trusted.gpg.d/postgres.gpg; \
+	gpg2 --batch --keyserver ha.pool.sks-keyservers.net --recv-keys "$key"; \
+	gpg2 --batch --export "$key" > /etc/apt/trusted.gpg.d/postgres.gpg; \
 	command -v gpgconf > /dev/null && gpgconf --kill all; \
 	rm -rf "$GNUPGHOME"; \
 	apt-key list
